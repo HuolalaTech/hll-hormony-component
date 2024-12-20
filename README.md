@@ -26,16 +26,21 @@
 目前开放的组件有四个：(更多组件陆续开放中)
 1.列表刷新加载组件
 ![img.png](pullrefresh.gif)
+
 2.数字键盘
 ![img.png](numberkeyboard.gif)
+
 3.地址组件
 ![img.png](address.gif)
+
 4.图片轮播组件
 ![img.png](swipper.gif)
 
 ## 下载安装
 ```
+
 ohpm install @ohos/pulltorefreshForHead
+
 ```
 ## 使用说明
 ```ets
