@@ -4,8 +4,14 @@ import { StringUtil } from '../utils/StringUtil';
 @Entry
 @Component
 export struct Test3 {
-  //出价输入内容
+  /**
+   * 最终数字结果
+   */
   @State inputText: string = ''
+
+  /**
+   * 自定义键盘
+   */
   @Builder
   dialogNumberKeyboardBuilder() {
     DialogNumberKeyboard({
@@ -17,47 +23,17 @@ export struct Test3 {
       .width('100%')
       .height(220)
   }
-  private handleKeyboardInput(input: number) {
-    if (StringUtil.isNullOrEmpty(this.inputText) && input >= 0) {
-      this.inputText = input.toString()
-      return
-    }
-    //删除事件
-    if (input < 0) {
-      if (!StringUtil.isNullOrEmpty(this.inputText)) {
-        this.inputText = this.inputText.substring(0, this.inputText.length - 1)
-      }
-      return
-    }
-    this.inputText += input
-  }
-
-  private onTextChange(text: string) {
-    try {
-      if (StringUtil.isNullOrEmpty(text)) {
-      } else {
-        if (text.length == 1 && text == ("0")) {
-          this.inputText = ''
-          return
-        }
-      }
-    } catch (err) {
-    }
-  }
-
 
   build() {
     Stack() {
       Row() {
         Text("我的出价").fontSize(16).fontColor($r('app.color.black_85_percent')).margin({ left: 16 })
-
         TextInput({ text: this.inputText, placeholder: '请输入价格' })
           .caretColor($r('app.color.client_orange'))
           .backgroundColor(Color.Transparent)
           .placeholderColor($r('app.color.gray_25_percent'))
           .fontColor($r('app.color.black_85_percent'))
-          .fontSize(22)
-          //.maxLength(10)
+          .fontSize(22)//.maxLength(10)
           .layoutWeight(1)
           .padding({ right: 8 })
           .height(44)
@@ -89,4 +65,39 @@ export struct Test3 {
 
   }
 
+  /**
+   * 处理键盘输入
+   * @param input
+   */
+  private handleKeyboardInput(input: number) {
+    if (StringUtil.isNullOrEmpty(this.inputText) && input >= 0) {
+      this.inputText = input.toString()
+      return
+    }
+    //删除事件
+    if (input < 0) {
+      if (!StringUtil.isNullOrEmpty(this.inputText)) {
+        this.inputText = this.inputText.substring(0, this.inputText.length - 1)
+      }
+      return
+    }
+    this.inputText += input
+  }
+
+  /**
+   * 监听文本变化
+   * @param text
+   */
+  private onTextChange(text: string) {
+    try {
+      if (StringUtil.isNullOrEmpty(text)) {
+      } else {
+        if (text.length == 1 && text == ("0")) {
+          this.inputText = ''
+          return
+        }
+      }
+    } catch (err) {
+    }
+  }
 }

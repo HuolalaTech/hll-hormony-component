@@ -1,8 +1,9 @@
-
-
-import { promptAction } from '@kit.ArkUI'
-import { AddressComponent, CommonComponentUIBean, StandardAddressBeanArray,
-  StandardOrderAddressBean } from 'lib_addresscomponent'
+import {
+  AddressComponent,
+  CommonComponentUIBean,
+  StandardAddressBeanArray,
+  StandardOrderAddressBean
+} from 'lib_addresscomponent'
 
 
 @Entry
@@ -11,20 +12,29 @@ export struct Test {
   @State addressArray: StandardAddressBeanArray = new StandardAddressBeanArray()
   @State commonUIBean: CommonComponentUIBean = new CommonComponentUIBean()
 
-  /**
-   * 吐司
-   * @param msg 吐司内容
-   */
-  showToast(msg: string) {
-    promptAction.showToast({
-      message: msg
-    })
+  aboutToAppear(): void {
+    this.initData()
+    this.initUI()
+  }
+
+  build() {
+    Column() {
+      Blank().layoutWeight(1)
+      AddressComponent({
+        addressArray: this.addressArray,
+        onAddAddressClick: () => {
+          this.testAddData()
+        },
+        commonUIBean: this.commonUIBean
+      })
+      Blank().layoutWeight(1)
+    }
   }
 
   /**
    * 测试添加地址
    */
-  testAddData(){
+  testAddData() {
     let addressArray = this.addressArray
     let length = addressArray.length
     let addBean = new StandardOrderAddressBean(length - 1, "新地址名称", "131XXXX6789")
@@ -32,13 +42,8 @@ export struct Test {
     addressArray[length].index = length
   }
 
-  aboutToAppear(): void {
-    this.initData()
-    this.initUI()
-  }
-
   /**
-   * 刷新全部地址
+   * 初始化地址
    */
   initData() {
     for (let i = 0; i < 2; i++) {
@@ -55,19 +60,5 @@ export struct Test {
   initUI() {
     this.commonUIBean.nameColor = $r('app.color.client_orange')
     this.commonUIBean.dragText = "滑动"
-  }
-
-  build() {
-    Column() {
-      Blank().layoutWeight(1)
-      AddressComponent({
-        addressArray: this.addressArray,
-        onAddAddressClick: () => {
-          this.testAddData()
-        },
-        commonUIBean: this.commonUIBean
-      })
-      Blank().layoutWeight(1)
-    }
   }
 }

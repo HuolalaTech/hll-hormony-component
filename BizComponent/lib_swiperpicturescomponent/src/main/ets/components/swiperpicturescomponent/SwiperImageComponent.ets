@@ -18,11 +18,11 @@ export struct SwiperImageComponent {
   /**
    * 图片数据源
    */
-  @ObjectLink vehicleImageArray: SwiperImageArray
+  @ObjectLink imagesArray: SwiperImageArray
   /**
    * 当前图片下标
    */
-  @Prop @Watch('onCurrentIndexChange') currentVehicleIndex: number
+  @Prop @Watch('onCurrentIndexChange') currentImageIndex: number
   /**
    * 透明度
    */
@@ -79,7 +79,7 @@ export struct SwiperImageComponent {
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
       Swiper(this.swiperController) {
-        ForEach(this.vehicleImageArray, (imageBean: SwiperImageUiBean, vehicleIndex: number) => {
+        ForEach(this.imagesArray, (imageBean: SwiperImageUiBean, vehicleIndex: number) => {
           Stack() {
             Image(imageBean.imageUrl)
               .objectFit(ImageFit.Contain)
@@ -148,9 +148,9 @@ export struct SwiperImageComponent {
 
   onDidBuild(): void {
     setTimeout(() => {
-      if (this.currentVehicleIndex != this.imageIndex) {
-        this.swiperController.changeIndex(this.currentVehicleIndex, false)
-        this.imageIndex = this.currentVehicleIndex
+      if (this.currentImageIndex != this.imageIndex) {
+        this.swiperController.changeIndex(this.currentImageIndex, false)
+        this.imageIndex = this.currentImageIndex
       }
     }, 50)
   }
@@ -162,7 +162,7 @@ export struct SwiperImageComponent {
    */
   private getOpacity(index: number): number {
     if (this.opacityList.length <= index) {
-      if (this.currentVehicleIndex == index) {
+      if (this.currentImageIndex == index) {
         return this.MAX_OPACITY
       } else {
         return this.MIN_OPACITY
@@ -200,9 +200,9 @@ export struct SwiperImageComponent {
    * @param position
    */
   private setOpacity(index: number, position: number) {
-    if (this.vehicleImageArray.length != this.opacityList.length) {
+    if (this.imagesArray.length != this.opacityList.length) {
       this.opacityList.splice(0, this.opacityList.length)
-      this.vehicleImageArray.forEach(() => {
+      this.imagesArray.forEach(() => {
         this.opacityList.push(this.MIN_ALPHA)
       })
     }
@@ -217,7 +217,7 @@ export struct SwiperImageComponent {
    */
   private getScale(index: number): number {
     if (this.scaleList.length <= index) {
-      if (this.currentVehicleIndex == index) {
+      if (this.currentImageIndex == index) {
         return this.MAX_SCALE
       } else {
         return this.MIN_SCALE
@@ -248,9 +248,9 @@ export struct SwiperImageComponent {
    * @param position
    */
   private setScale(index: number, position: number) {
-    if (this.vehicleImageArray.length != this.scaleList.length) {
+    if (this.imagesArray.length != this.scaleList.length) {
       this.scaleList.splice(0, this.scaleList.length)
-      this.vehicleImageArray.forEach(() => {
+      this.imagesArray.forEach(() => {
         this.scaleList.push(this.MIN_SCALE)
       })
     }
@@ -264,14 +264,14 @@ export struct SwiperImageComponent {
    */
   private getLeftMargin(index: number): number {
     if (this.leftMarginList.length <= index) {
-      if (this.currentVehicleIndex == index) {
+      if (this.currentImageIndex == index) {
         return 0
-      } else if (index < this.currentVehicleIndex) {
+      } else if (index < this.currentImageIndex) {
         //屏幕宽度-左右各52边距-图片宽度202剩下的为可以移动的距离
         let maxMargin =
           DisplayUtil.screenWidthVp() - PreOrNextMargin - PreOrNextMargin - (VEHICLE_IMG_WIDTH * this.MIN_SCALE)
         return maxMargin
-      } else if (index > this.currentVehicleIndex) {
+      } else if (index > this.currentImageIndex) {
         //屏幕宽度-左右各52边距-图片宽度202剩下的为可以移动的距离
         let maxMargin =
           DisplayUtil.screenWidthVp() - PreOrNextMargin - PreOrNextMargin - (VEHICLE_IMG_WIDTH * this.MIN_SCALE)
@@ -287,9 +287,9 @@ export struct SwiperImageComponent {
    * @param position
    */
   private setLeftMargin(index: number, position: number) {
-    if (this.vehicleImageArray.length != this.leftMarginList.length) {
+    if (this.imagesArray.length != this.leftMarginList.length) {
       this.leftMarginList.splice(0, this.leftMarginList.length)
-      this.vehicleImageArray.forEach(() => {
+      this.imagesArray.forEach(() => {
         this.leftMarginList.push(0)
       })
     }
@@ -310,9 +310,9 @@ export struct SwiperImageComponent {
    * 监控图片下标改变数据变化
    */
   private onCurrentIndexChange() {
-    if (this.currentVehicleIndex != this.imageIndex) {
-      this.swiperController.changeIndex(this.currentVehicleIndex, true)
-      this.imageIndex = this.currentVehicleIndex
+    if (this.currentImageIndex != this.imageIndex) {
+      this.swiperController.changeIndex(this.currentImageIndex, true)
+      this.imageIndex = this.currentImageIndex
     }
   }
 }

@@ -9,9 +9,15 @@ import {
 @Entry
 @Component
 export struct Test2 {
-  /**图片列表*/
+  /**
+   * 图片列表数据源
+   */
   @State swiperImageArray: SwiperImageArray = new SwiperImageArray()
-  @State currentVehicleIndex: number = 0
+  
+  /**
+   * 当前选中的vehicleIndex
+   */
+  @State currentImageIndex: number = 0
 
   aboutToAppear(): void {
     this.testAddData(1,
@@ -26,22 +32,12 @@ export struct Test2 {
       "https://luna-cdn-public-test.huolala.cn/luna-public-al-test/test001/900900/20230921/1001a30936c51ace4a2abc42cc014f9b85c7.png")
   }
 
-  /**
-   * 测试添加地址
-   */
-  testAddData(swiperId: number, imageUrl: string) {
-    let addBean = new SwiperImageUiBean()
-    addBean.swiperId = swiperId
-    addBean.imageUrl = imageUrl
-    this.swiperImageArray.push(addBean)
-  }
-
   build() {
     Column() {
       Blank().layoutWeight(1)
       SwiperImageComponent({
-        vehicleImageArray: this.swiperImageArray,
-        currentVehicleIndex: this.currentVehicleIndex,
+        imagesArray: this.swiperImageArray,
+        currentImageIndex: this.currentImageIndex,
         indexChangeAction: (source: SelSwiperTabSource, index: number) => {
 
         },
@@ -52,5 +48,16 @@ export struct Test2 {
     }.padding({ bottom: 12 })
 
   }
+
+  /**
+   * 添加图片测试数据
+   */
+  testAddData(swiperId: number, imageUrl: string) {
+    let addBean = new SwiperImageUiBean()
+    addBean.swiperId = swiperId
+    addBean.imageUrl = imageUrl
+    this.swiperImageArray.push(addBean)
+  }
+
 }
 
